@@ -30,7 +30,7 @@ function Product() {
         <title>{item.title}</title>
       </Helmet>
       <Header />
-      <main style={{ justifyContent: "center" }}>
+      <main style={{ display: "grid", justifyContent: "center" }}>
         <div
           style={{
             border: "black solid 2px",

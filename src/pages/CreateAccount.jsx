@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { users } from "../recoil/users/allUsers/atom";
+import { useRecoilState } from "recoil";
 
 function CreateAccount() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -16,9 +18,11 @@ function CreateAccount() {
   const [street, setStreet] = useState("");
   const [number, setNumber] = useState(1);
   const [zip, setZip] = useState("");
-  const navigate = useNavigate();
+
+  const [user, setUser] = useRecoilState(users);
 
   async function handleSubmit(e) {
+    let newUser = [];
     e.preventDefault();
     try {
       await fetch("https://k4backend.osuka.dev/users", {
@@ -45,11 +49,17 @@ function CreateAccount() {
         }),
       })
         .then((res) => res.json())
-        .then((json) => console.log(json));
+        .then((res) => (newUser = [...user, res]))
+        .then(() => setUser(newUser))
+        .then(() => navigate("/Login"));
     } catch (error) {
-      console.error(error);
+      alert(error + "Problem with server, try again later");
     }
   }
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   return (
     <div>
@@ -110,7 +120,7 @@ function CreateAccount() {
             onChange={(e) => setStreet(e.target.value)}
           />
           <input
-            type="number"
+            type="text"
             placeholder="Number"
             value={number}
             onChange={(e) => setNumber(e.target.value)}

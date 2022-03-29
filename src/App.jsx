@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import { itemsStock } from "./recoil/products/atom";
+import { users } from "./recoil/users/atom";
 
 //Pages
 import Home from "./pages/Home";
@@ -17,6 +18,7 @@ import CreateAccount from "./pages/CreateAccount";
 
 function App() {
   const [items, setItems] = useRecoilState(itemsStock);
+  const [user, setUser] = useRecoilState(users);
 
   useEffect(() => {
     axios
@@ -25,6 +27,15 @@ function App() {
         localStorage.setItem("stock", JSON.stringify(response.data))
       );
     return setItems(JSON.parse(localStorage.getItem("stock" || [])));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("https://k4backend.osuka.dev/users")
+      .then((response) =>
+        localStorage.setItem("users", JSON.stringify(response.data))
+      );
+    return setUser(JSON.parse(localStorage.getItem("users" || [])));
   }, []);
 
   return (
