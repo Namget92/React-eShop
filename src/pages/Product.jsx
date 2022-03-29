@@ -5,17 +5,27 @@ import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useRecoilState } from "recoil";
 import { itemsStock } from "../recoil/products/atom";
-import { cartValue } from "../recoil/cart/atom";
+import { cartValue } from "../recoil/globelCart/atom";
+import userHook from "../hooks/userHook";
+import cartHooks from "../hooks/cartHooks";
+import { currentUser } from "../recoil/users/currentUser/atom";
 
 function Product() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [cart, setCart] = useRecoilState(cartValue);
+  const [cUser, setCUser] = useRecoilState(currentUser);
   const params = useParams();
   const item = items[params.id - 1];
+  const { addItem } = cartHooks(useRecoilState);
+  const { userStorage } = userHook(useRecoilState);
 
   useEffect(() => {
     return setItems(JSON.parse(localStorage.getItem("stock" || [])));
   }, []);
+
+  useEffect(() => {
+    userStorage();
+  }, [cUser]);
 
   if (items.length === 0) return <h1>Loading...</h1>;
 
@@ -59,7 +69,14 @@ function Product() {
               {item.description}
             </li>
           </ul>
-          <button style={{ height: "2rem", width: "6rem" }}>Add to cart</button>
+          <button
+            onClick={() => {
+              addItem(cUser.id, item);
+            }}
+            style={{ height: "2rem", width: "6rem" }}
+          >
+            Add to cart
+          </button>
         </div>
       </main>
       <Footer />

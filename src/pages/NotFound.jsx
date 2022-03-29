@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
+import { currentUser } from "../recoil/users/currentUser/atom";
+import { useRecoilState } from "recoil";
+import userHook from "../hooks/userHook";
 
 function NotFound() {
+  const [cUser, setCUser] = useRecoilState(currentUser);
+  const { userStorage } = userHook(useRecoilState);
   const navigate = useNavigate();
+  useEffect(() => {
+    userStorage();
+  }, [cUser]);
 
   function handleClickMenu(gate) {
     if (gate === 1) {

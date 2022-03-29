@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
+import { currentUser } from "../recoil/users/currentUser/atom";
+import { useRecoilState } from "recoil";
+import userHook from "../hooks/userHook";
 
 function Home() {
   const navigate = useNavigate();
+  const [cUser, setCUser] = useRecoilState(currentUser);
+  const { userStorage } = userHook(useRecoilState);
   function handleLink() {
     navigate(`/Products`);
   }
@@ -18,12 +23,18 @@ function Home() {
       navigate("/NotFound");
     }
   }
+
+  useEffect(() => {
+    userStorage();
+  }, [cUser]);
+
   return (
     <div>
       <Helmet>
         <title>Home</title>
       </Helmet>
       <Header />
+
       <div style={{ textAlign: "center", marginTop: "15rem" }}>
         <h1>Welcome!</h1>
         <h2>

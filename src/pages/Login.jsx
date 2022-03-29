@@ -3,26 +3,33 @@ import { Helmet } from "react-helmet-async";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import { users } from "../recoil/users/allUsers/atom";
+import { allUsers } from "../recoil/users/allUsers/atom";
+import { currentUser } from "../recoil/users/currentUser/atom";
+
 import { useRecoilState } from "recoil";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useRecoilState(users);
+  const [user, setUser] = useRecoilState(allUsers);
+  const [cUser, setCUser] = useRecoilState(currentUser);
   const navigate = useNavigate();
+  console.log(cUser);
+
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (
-      user.some(
-        (person) => person.username === username && person.password === password
-      )
-    ) {
-      alert("Object found inside the array.");
-    } else {
-      alert("Object not found.");
-    }
+    user.forEach((person) => {
+      if (person.username === username && person.password === password) {
+        setCUser(person);
+        localStorage.setItem("currentUsers", JSON.stringify(person));
+        if (person.role === "user") {
+          navigate("/MyPage");
+        } else if (person.role === "admin") {
+          navigate("/AdminPage");
+        }
+      }
+    });
   }
 
   return (

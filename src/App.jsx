@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import { itemsStock } from "./recoil/products/atom";
-import { users } from "./recoil/users/atom";
+import { allUsers } from "./recoil/users/allUsers/atom";
 
 //Pages
 import Home from "./pages/Home";
@@ -18,7 +18,7 @@ import CreateAccount from "./pages/CreateAccount";
 
 function App() {
   const [items, setItems] = useRecoilState(itemsStock);
-  const [user, setUser] = useRecoilState(users);
+  const [user, setUser] = useRecoilState(allUsers);
 
   useEffect(() => {
     axios

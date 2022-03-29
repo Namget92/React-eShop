@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import { users } from "../recoil/users/allUsers/atom";
+import { allUsers } from "../recoil/users/allUsers/atom";
 import { useRecoilState } from "recoil";
 
 function CreateAccount() {
@@ -19,7 +19,7 @@ function CreateAccount() {
   const [number, setNumber] = useState(1);
   const [zip, setZip] = useState("");
 
-  const [user, setUser] = useRecoilState(users);
+  const [user, setUser] = useRecoilState(allUsers);
 
   async function handleSubmit(e) {
     let newUser = [];

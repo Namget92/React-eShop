@@ -1,10 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { currentUser } from "../recoil/users/currentUser/atom";
+import { useRecoilState } from "recoil";
 
 export default function Header() {
   const navigate = useNavigate();
   const params = useParams();
+  const [cUser, setCUser] = useRecoilState(currentUser);
   function handleClickMenu(gate) {
     if (gate === 1) {
       navigate("/");
@@ -14,6 +16,11 @@ export default function Header() {
       navigate("/Cart");
     } else if (gate === 4) {
       navigate("/Login");
+    } else if (gate === 5) {
+      navigate("/MyPage");
+    } else if (gate === 6) {
+      localStorage.removeItem("currentUsers");
+      setCUser([]);
     } else {
       navigate("/NotFound");
     }
@@ -51,13 +58,32 @@ export default function Header() {
         Cart
       </button>
 
-      <button
-        onClick={() => {
-          handleClickMenu(4);
-        }}
-      >
-        Login
-      </button>
+      {cUser.length < 1 ? (
+        <button
+          onClick={() => {
+            handleClickMenu(4);
+          }}
+        >
+          Login
+        </button>
+      ) : (
+        <>
+          <button
+            onClick={() => {
+              handleClickMenu(5);
+            }}
+          >
+            {cUser.name.firstname}´s Page
+          </button>
+          <button
+            onClick={() => {
+              handleClickMenu(6);
+            }}
+          >
+            Logout
+          </button>
+        </>
+      )}
     </span>
   );
 }
