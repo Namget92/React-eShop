@@ -7,14 +7,19 @@ import { useNavigate } from "react-router-dom";
 import userHook from "../hooks/userHook";
 import { useRecoilState } from "recoil";
 import { currentUser } from "../recoil/users/currentUser/atom";
-import { cartValue } from "../recoil/cart/atom";
+import { globalCartValue } from "../recoil/cart/globelCart/atom";
+import { currentCartValue } from "../recoil/cart/currentCart/atom";
 
 function Cart() {
   const { userStorage } = userHook(useRecoilState);
   const params = useParams();
   const navigate = useNavigate();
   const [cUser, setCUser] = useRecoilState(currentUser);
-  const [cart, setCart] = useRecoilState(cartValue);
+  const [gCart, setGCart] = useRecoilState(globalCartValue);
+  const [cCart, setCCart] = useRecoilState(currentCartValue);
+
+  console.log("c" + "-" + cCart + "-");
+  console.log("g" + "-" + gCart + "-");
 
   useEffect(() => {
     userStorage();
@@ -34,7 +39,7 @@ function Cart() {
       <main
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
-        {cart.map((item) => (
+        {cCart.map((item) => (
           <div
             key={item.id}
             style={{

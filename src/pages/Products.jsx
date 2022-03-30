@@ -6,13 +6,12 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useRecoilState } from "recoil";
 import { itemsStock } from "../recoil/products/atom";
-import { cartValue } from "../recoil/cart/atom";
 import { currentUser } from "../recoil/users/currentUser/atom";
 import userHook from "../hooks/userHook";
 
 function Products() {
   const [items, setItems] = useRecoilState(itemsStock);
-  const [cart, setCart] = useRecoilState(cartValue);
+
   const params = useParams();
   const navigate = useNavigate();
   const [cUser, setCUser] = useRecoilState(currentUser);

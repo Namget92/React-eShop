@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { allUsers } from "../recoil/users/allUsers/atom";
 import { currentUser } from "../recoil/users/currentUser/atom";
-
+import cartHooks from "../hooks/cartHooks";
 import { useRecoilState } from "recoil";
 
 function Login() {
@@ -14,7 +14,7 @@ function Login() {
   const [user, setUser] = useRecoilState(allUsers);
   const [cUser, setCUser] = useRecoilState(currentUser);
   const navigate = useNavigate();
-  console.log(cUser);
+  const { getMyCart } = cartHooks(useRecoilState);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,6 +24,7 @@ function Login() {
         setCUser(person);
         localStorage.setItem("currentUsers", JSON.stringify(person));
         if (person.role === "user") {
+          getMyCart(person.id);
           navigate("/MyPage");
         } else if (person.role === "admin") {
           navigate("/AdminPage");

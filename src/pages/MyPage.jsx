@@ -6,11 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { currentUser } from "../recoil/users/currentUser/atom";
 import { useRecoilState } from "recoil";
 import userHook from "../hooks/userHook";
+import { globalCartValue } from "../recoil/cart/globelCart/atom";
+import { currentCartValue } from "../recoil/cart/currentCart/atom";
 
 function MyPage() {
   const navigate = useNavigate();
   const [cUser, setCUser] = useRecoilState(currentUser);
   const { userStorage } = userHook(useRecoilState);
+  const [gCart, setGCart] = useRecoilState(globalCartValue);
+  const [cCart, setCCart] = useRecoilState(currentCartValue);
 
   useEffect(() => {
     userStorage("MyPage");
