@@ -9,6 +9,9 @@ import { useRecoilState } from "recoil";
 import { currentUser } from "../recoil/users/currentUser/atom";
 import { globalCartValue } from "../recoil/cart/globelCart/atom";
 import { currentCartValue } from "../recoil/cart/currentCart/atom";
+import { itemsStock } from "../recoil/products/atom";
+import { nanoid } from "nanoid";
+import cartHooks from "../hooks/cartHooks";
 
 function Cart() {
   const { userStorage } = userHook(useRecoilState);
@@ -17,13 +20,20 @@ function Cart() {
   const [cUser, setCUser] = useRecoilState(currentUser);
   const [gCart, setGCart] = useRecoilState(globalCartValue);
   const [cCart, setCCart] = useRecoilState(currentCartValue);
-
-  console.log("c" + "-" + cCart + "-");
-  console.log("g" + "-" + gCart + "-");
+  const [items, setItems] = useRecoilState(itemsStock);
+  const { removeItem } = cartHooks(useRecoilState);
 
   useEffect(() => {
     userStorage();
   }, [cUser]);
+
+  if (items.length === 0) return <h1>Loading...</h1>;
+
+  let price = 0;
+  const totalPrice = cCart.forEach((item) => {
+    price = price + items[item.iID].price;
+    console.log(price);
+  });
 
   return (
     <div
@@ -36,12 +46,15 @@ function Cart() {
         <title>Products</title>
       </Helmet>
       <Header />
+      <h1 style={{ textAlign: "center" }}>
+        Total cost: {Math.round(price * 100) / 100}
+      </h1>
       <main
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
-        {cCart.map((item) => (
+        {cCart.map((product) => (
           <div
-            key={item.id}
+            key={nanoid()}
             style={{
               border: "black solid 2px",
               margin: "1rem",
@@ -51,15 +64,25 @@ function Cart() {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <h2>{item.title}</h2>
+            <h2>{items[product.iID].title}</h2>
             <img
-              src={item.image}
-              alt={`picture of ${item.title}`}
+              src={items[product.iID].image}
+              alt={`picture of ${items[product.iID].title}`}
               style={{ width: "10rem" }}
             />
-            <h3>Price: {item.price} €</h3>
+            <h3>Price: {items[product.iID].price} €</h3>
+            <button
+              onClick={() => {
+                removeItem(product.pID);
+              }}
+              style={{ height: "2rem", width: "6rem" }}
+            >
+              Remove
+            </button>
           </div>
         ))}
       </main>

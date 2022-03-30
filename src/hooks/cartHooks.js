@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { globalCartValue } from "../recoil/cart/globelCart/atom";
 import { currentCartValue } from "../recoil/cart/currentCart/atom";
 import { itemsStock } from "../recoil/products/atom";
+import { nanoid } from "nanoid";
 
 function cartHooks() {
   const navigate = useNavigate();
@@ -14,14 +15,12 @@ function cartHooks() {
   const [items, setItems] = useRecoilState(itemsStock);
 
   function addItem(userID, itemID) {
-    const selectedItem = { uID: userID, iID: itemID };
+    const selectedItem = { uID: userID, iID: itemID - 1, pID: nanoid() };
     const amountArray = [];
     amountArray.push(selectedItem);
     let newCart = cCart.concat(amountArray);
+
     setCCart(newCart);
-    setGCart([...cCart]);
-    console.log(cCart);
-    console.log(gCart);
   }
 
   function getMyCart(userID) {
@@ -34,11 +33,21 @@ function cartHooks() {
         setGCart([...gCart, cCart]);
       }
     });
-    console.log("c" + "-" + cCart + "-");
-    console.log("g" + "-" + gCart + "-");
+    console.log("c:" + "-" + cCart + "-");
+    // console.log("g" + "-" + gCart + "-");
   }
 
-  return { addItem, getMyCart };
+  function removeItem(id) {
+    const newArray = [];
+    cCart.map((item) => {
+      if (item.pID !== id) {
+        newArray.push(item);
+      }
+    });
+    setCCart(newArray);
+  }
+
+  return { addItem, getMyCart, removeItem };
 }
 
 export default cartHooks;
