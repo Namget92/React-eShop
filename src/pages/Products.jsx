@@ -23,7 +23,7 @@ function Products() {
   useEffect(() => {
     setItems(JSON.parse(localStorage.getItem("stock" || [])));
     userStorage();
-  }, [cUser]);
+  }, []);
 
   useEffect(() => {
     if (category === "all") {
