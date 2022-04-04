@@ -13,17 +13,16 @@ function AdminChange() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [cUser, setCUser] = useRecoilState(currentUser);
   const params = useParams();
-  const item = items.find((item) => item.id === counter);
+  const [counter, setCounter] = useRecoilState(count);
   const { userStorage } = userHook(useRecoilState);
   const [titel, setTitel] = useState("");
   const [price, setPrice] = useState(0);
-  const [count, setCount] = useState(0);
+  const [counte, setCounte] = useState(0);
   const [rate, setRate] = useState(0);
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
-  const [counter, setCounter] = useRecoilState(count);
 
   useEffect(() => {
     userStorage();
@@ -32,7 +31,7 @@ function AdminChange() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await fetch(`https://k4backend.osuka.dev/products/${item.id}`, {
+      await fetch(`https://k4backend.osuka.dev/products/${currentitem.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -44,16 +43,14 @@ function AdminChange() {
           price: price,
           rating: {
             rate: rate,
-            count: count,
+            count: counte,
           },
           title: titel,
         }),
       })
         .then((res) => res.json())
         .then((res) => {
-          const newArray = items.filter(
-            (item) => item.id !== items[params.id - 1].id
-          );
+          const newArray = items.filter((item) => item.id !== currentitem.id);
           console.log(newArray);
 
           const newNewArray = newArray.concat(res);
@@ -71,7 +68,9 @@ function AdminChange() {
     }
   }
 
-  if (items.length === 0) return <h1>Loading...</h1>;
+  const currentitem = items.find((item) => item.id === counter);
+
+  if (currentitem === undefined) return <h1>Loading...</h1>;
 
   return (
     <div
@@ -81,7 +80,7 @@ function AdminChange() {
       }}
     >
       <Helmet>
-        <title>{item.title}</title>
+        <title>{currentitem.title}</title>
       </Helmet>
       <Header />
       <main
@@ -159,8 +158,8 @@ function AdminChange() {
             </p>
             <input
               type="number"
-              value={count}
-              onChange={(e) => setCount(e.target.value)}
+              value={counte}
+              onChange={(e) => setCounte(e.target.value)}
             />
 
             <p

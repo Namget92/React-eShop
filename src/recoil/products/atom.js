@@ -9,3 +9,7 @@ export const count = atom({
   key: "count",
   default: 0,
 });
+export const count2 = atom({
+  key: "count2",
+  default: 0,
+});
