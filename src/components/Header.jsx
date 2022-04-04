@@ -1,11 +1,10 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { currentUser } from "../recoil/users/currentUser/atom";
 import { useRecoilState } from "recoil";
 
 export default function Header() {
   const navigate = useNavigate();
-  const params = useParams();
   const [cUser, setCUser] = useRecoilState(currentUser);
   function handleClickMenu(gate) {
     if (gate === 1) {

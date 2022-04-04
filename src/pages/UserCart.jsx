@@ -10,27 +10,18 @@ import { itemsStock } from "../recoil/products/atom";
 import { nanoid } from "nanoid";
 import cartHooks from "../hooks/cartHooks";
 
-function Cart() {
+function UserCart() {
   const { userStorage } = userHook(useRecoilState);
   const [cUser, setCUser] = useRecoilState(currentUser);
   const [cCart, setCCart] = useRecoilState(currentCartValue);
   const [items, setItems] = useRecoilState(itemsStock);
   const { removeItem } = cartHooks(useRecoilState);
 
-  console.log(cCart);
-
   useEffect(() => {
     userStorage();
   }, [cUser]);
 
   if (items.length === 0) return <h1>Loading...</h1>;
-  const cartToShow = cCart.filter((item) => item.uID === cUser.username);
-  console.log(cartToShow);
-
-  let price = 0;
-  const totalPrice = cartToShow.forEach((item) => {
-    price = price + items[item.iID].price;
-  });
 
   return (
     <div
@@ -40,16 +31,11 @@ function Cart() {
       }}
     >
       <Helmet>
-        <title>Products</title>
+        <title>User Carts</title>
       </Helmet>
       <Header />
-      <h1 style={{ textAlign: "center" }}>
-        Total cost: {Math.round(price * 100) / 100} €
-      </h1>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        {" "}
-        <button>Go to checkout</button>
-      </div>
+      <h1 style={{ textAlign: "center" }}></h1>
+
       <main
         style={{
           display: "flex",
@@ -58,7 +44,7 @@ function Cart() {
           minHeight: "77.5vh",
         }}
       >
-        {cartToShow.map((product) => (
+        {cCart.map((product) => (
           <div
             key={nanoid()}
             style={{
@@ -66,7 +52,6 @@ function Cart() {
               margin: "1rem",
               padding: "1rem",
               width: "15rem",
-
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
@@ -74,6 +59,11 @@ function Cart() {
               alignItems: "center",
             }}
           >
+            {" "}
+            <h2>
+              Belongs to:{" "}
+              {product.uID === undefined ? "undefined" : product.uID}
+            </h2>
             <h2>{items[product.iID].title}</h2>
             <img
               src={items[product.iID].image}
@@ -98,4 +88,4 @@ function Cart() {
   );
 }
 
-export default Cart;
+export default UserCart;

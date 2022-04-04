@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Header from "../components/Header";
-import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useRecoilState } from "recoil";
@@ -13,8 +12,6 @@ function Products() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [category, setCategory] = useState("all");
   const [arrProd, setArrProd] = useState(items);
-
-  const params = useParams();
   const navigate = useNavigate();
   const [cUser, setCUser] = useRecoilState(currentUser);
   const { userStorage } = userHook(useRecoilState);

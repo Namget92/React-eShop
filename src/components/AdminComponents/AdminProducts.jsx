@@ -1,15 +1,20 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { itemsStock } from "../../recoil/products/atom";
+import { itemsStock, count } from "../../recoil/products/atom";
 import { useNavigate } from "react-router-dom";
 
 function AdminUsers() {
   const [items, setItems] = useRecoilState(itemsStock);
+  const [counter, setCounter] = useRecoilState(count);
   const navigate = useNavigate();
+
   function handleRemove(itemID) {
+    let c = counter;
     const newArray = items.filter((item) => item.id !== itemID);
     localStorage.setItem("stock", JSON.stringify(newArray));
     setItems(newArray);
+    c = c + 1;
+    setCounter(c);
   }
   function handleImageClick(id) {
     navigate(`/AdminChange/${id}`);

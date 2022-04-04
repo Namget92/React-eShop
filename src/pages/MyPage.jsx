@@ -2,20 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
 import { currentUser } from "../recoil/users/currentUser/atom";
 import { useRecoilState } from "recoil";
 import userHook from "../hooks/userHook";
-import { globalCartValue } from "../recoil/cart/globelCart/atom";
-import { currentCartValue } from "../recoil/cart/currentCart/atom";
-import { allUsers } from "../recoil/users/allUsers/atom";
 
 function MyPage() {
-  const navigate = useNavigate();
   const [cUser, setCUser] = useRecoilState(currentUser);
   const { userStorage } = userHook(useRecoilState);
-  const [gCart, setGCart] = useRecoilState(globalCartValue);
-  const [cCart, setCCart] = useRecoilState(currentCartValue);
   let [boo, setBoo] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,14 +21,11 @@ function MyPage() {
   const [number, setNumber] = useState("");
   const [zip, setZip] = useState("");
 
-  const [user, setUser] = useRecoilState(allUsers);
-
   useEffect(() => {
     userStorage("MyPage");
   }, [cUser]);
 
   async function changeUser(e) {
-    let newUser = [];
     e.preventDefault();
     try {
       await fetch(`https://k4backend.osuka.dev/users/${cUser.id}`, {
@@ -62,10 +52,12 @@ function MyPage() {
         }),
       })
         .then((res) => res.json())
-        .then((res) => setCUser(res));
+        .then((res) => setCUser(res))
+        .then((json) => console.log(json));
     } catch (error) {
       console.log(error);
     }
+    console.log(cUser);
   }
 
   if (Object.keys(cUser).length === 0) return <div>Loading..</div>;
@@ -83,8 +75,7 @@ function MyPage() {
           {cUser.address.city} {cUser.address.zipcode}
         </p>
         <p>
-          Name: {cUser.name.firstname}
-          {cUser.name.lastname}
+          Name: {cUser.name.firstname} {cUser.name.lastname}
         </p>
         <p>Phone: {cUser.phone}</p>
         <p>Username: {cUser.username}</p>
@@ -92,13 +83,15 @@ function MyPage() {
       </div>
 
       {boo ? (
-        <button
-          onClick={() => {
-            setBoo((boo = !boo));
-          }}
-        >
-          Update your info?
-        </button>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <button
+            onClick={() => {
+              setBoo((boo = !boo));
+            }}
+          >
+            Update your info?
+          </button>
+        </div>
       ) : (
         <form style={{ display: "grid" }} onSubmit={changeUser}>
           <input

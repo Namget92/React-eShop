@@ -11,9 +11,7 @@ function Home() {
   const navigate = useNavigate();
   const [cUser, setCUser] = useRecoilState(currentUser);
   const { userStorage } = userHook(useRecoilState);
-  function handleLink() {
-    navigate(`/Products`);
-  }
+
   function handleClickMenu(gate) {
     if (gate === 1) {
       navigate("/Products");

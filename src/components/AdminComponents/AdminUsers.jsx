@@ -23,10 +23,7 @@ function AdminProducts() {
               margin: "1rem",
               padding: "1rem",
               width: "15rem",
-              // height: "30rem",
               display: "grid",
-              // flexWrap: "wrap",
-              // justifyContent: "center",
             }}
           >
             <p style={{ margin: "0.1rem" }}>

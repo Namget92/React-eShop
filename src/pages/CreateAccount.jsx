@@ -34,7 +34,7 @@ function CreateAccount() {
           email: email,
           username: username,
           password: password,
-          role: role,
+          role: "user",
           name: {
             firstname: firstname,
             lastname: lasttname,
@@ -51,15 +51,12 @@ function CreateAccount() {
         .then((res) => res.json())
         .then((res) => (newUser = [...user, res]))
         .then(() => setUser(newUser))
+        .then(() => alert("You can now log in with your new account"))
         .then(() => navigate("/Login"));
     } catch (error) {
       alert(error + "Problem with server, try again later");
     }
   }
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return (
     <div>

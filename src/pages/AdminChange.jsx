@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { Helmet } from "react-helmet-async";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useRecoilState } from "recoil";
 import { itemsStock } from "../recoil/products/atom";
-import { globalCartValue } from "../recoil/cart/globelCart/atom";
-import { currentCartValue } from "../recoil/cart/currentCart/atom";
 import { useNavigate } from "react-router-dom";
-
 import userHook from "../hooks/userHook";
-import cartHooks from "../hooks/cartHooks";
 import { currentUser } from "../recoil/users/currentUser/atom";
 
 function AdminChange() {
   const [items, setItems] = useRecoilState(itemsStock);
-  const [gCart, setGCart] = useRecoilState(globalCartValue);
-  const [cCart, setCCart] = useRecoilState(currentCartValue);
   const [cUser, setCUser] = useRecoilState(currentUser);
   const params = useParams();
   const item = items[params.id - 1];
-  const { addItem } = cartHooks(useRecoilState);
   const { userStorage } = userHook(useRecoilState);
   const [titel, setTitel] = useState("");
   const [price, setPrice] = useState(0);
@@ -29,7 +22,6 @@ function AdminChange() {
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-
   const [category, setCategory] = useState("");
 
   useEffect(() => {

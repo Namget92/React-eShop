@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -14,7 +14,6 @@ function Login() {
   const [user, setUser] = useRecoilState(allUsers);
   const [cUser, setCUser] = useRecoilState(currentUser);
   const navigate = useNavigate();
-  const { getMyCart } = cartHooks(useRecoilState);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,7 +23,6 @@ function Login() {
         setCUser(person);
         localStorage.setItem("currentUsers", JSON.stringify(person));
         if (person.role === "user") {
-          getMyCart(person.id);
           navigate("/MyPage");
         } else if (person.role === "admin") {
           navigate("/AdminPage");

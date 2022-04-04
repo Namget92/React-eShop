@@ -6,16 +6,12 @@ import AdminUsers from "../components/AdminComponents/AdminUsers";
 import AdminProducts from "../components/AdminComponents/AdminProducts";
 import { useNavigate } from "react-router-dom";
 import { currentUser } from "../recoil/users/currentUser/atom";
-import { allUsers } from "../recoil/users/allUsers/atom";
 import { useRecoilState } from "recoil";
 import userHook from "../hooks/userHook";
-import { itemsStock } from "../recoil/products/atom";
 
 function AdminPage() {
   const navigate = useNavigate();
-  const [items, setItems] = useRecoilState(itemsStock);
   const [cUser, setCUser] = useRecoilState(currentUser);
-  const [aUser, setAUser] = useRecoilState(allUsers);
   const { userStorage } = userHook(useRecoilState);
   const [boo, setBoo] = useState(true);
 
@@ -62,6 +58,13 @@ function AdminPage() {
         {" "}
         <button onClick={handleClick}>
           {boo ? "Show Users" : "Show Products"}
+        </button>
+        <button
+          onClick={() => {
+            navigate("/userCart");
+          }}
+        >
+          See Users Carts
         </button>
       </div>
 

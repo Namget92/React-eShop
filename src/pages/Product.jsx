@@ -4,21 +4,17 @@ import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useRecoilState } from "recoil";
-import { itemsStock } from "../recoil/products/atom";
-import { globalCartValue } from "../recoil/cart/globelCart/atom";
-import { currentCartValue } from "../recoil/cart/currentCart/atom";
-
+import { itemsStock, count } from "../recoil/products/atom";
 import userHook from "../hooks/userHook";
 import cartHooks from "../hooks/cartHooks";
 import { currentUser } from "../recoil/users/currentUser/atom";
 
 function Product() {
   const [items, setItems] = useRecoilState(itemsStock);
-  const [gCart, setGCart] = useRecoilState(globalCartValue);
-  const [cCart, setCCart] = useRecoilState(currentCartValue);
   const [cUser, setCUser] = useRecoilState(currentUser);
+  const [counter, setCounter] = useRecoilState(count);
   const params = useParams();
-  const item = items[params.id - 1];
+  const item = items[params.id - counter];
   const { addItem } = cartHooks(useRecoilState);
   const { userStorage } = userHook(useRecoilState);
 
@@ -77,7 +73,7 @@ function Product() {
           </ul>
           <button
             onClick={() => {
-              addItem(cUser.id, item.id);
+              addItem(cUser.username, item.id);
             }}
             style={{ height: "2rem", width: "6rem" }}
           >

@@ -1,9 +1,10 @@
-import react, { useEffect, useState } from "react";
+import react, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import { itemsStock } from "./recoil/products/atom";
 import { allUsers } from "./recoil/users/allUsers/atom";
+import cartHooks from "./hooks/cartHooks";
 
 //Pages
 import Home from "./pages/Home";
@@ -11,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import Products from "./pages/Products";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
+import UserCart from "./pages/UserCart";
 import Login from "./pages/Login";
 import MyPage from "./pages/MyPage";
 import AdminPage from "./pages/AdminPage";
@@ -20,6 +22,7 @@ import AdminChange from "./pages/AdminChange";
 function App() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [user, setUser] = useRecoilState(allUsers);
+  const { updateCart } = cartHooks(useRecoilState);
 
   useEffect(() => {
     axios
@@ -39,12 +42,17 @@ function App() {
     return setUser(JSON.parse(localStorage.getItem("users" || [])));
   }, []);
 
+  useEffect(() => {
+    updateCart();
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/Products/:id" element={<Product />} />
       <Route path="/Products/" element={<Products />} />
       <Route path="/Cart" element={<Cart />} />
+      <Route path="/UserCart" element={<UserCart />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/MyPage" element={<MyPage />} />
       <Route path="/AdminPage" element={<AdminPage />} />
