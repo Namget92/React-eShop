@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import { itemsStock } from "./recoil/products/atom";
 import { allUsers } from "./recoil/users/allUsers/atom";
-import cartHooks from "./hooks/cartHooks";
+// import cartHooks from "./hooks/cartHooks";
 
 //Pages
 import Home from "./pages/Home";
@@ -22,7 +22,7 @@ import AdminChange from "./pages/AdminChange";
 function App() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [user, setUser] = useRecoilState(allUsers);
-  const { updateCart } = cartHooks(useRecoilState);
+  // const { updateCart } = cartHooks(useRecoilState);
 
   useEffect(() => {
     axios

@@ -32,7 +32,7 @@ function cartHooks() {
   //   console.log("tets");
   // }
 
-  return { addItem, removeItem, updateCart };
+  return { addItem, removeItem };
 }
 
 export default cartHooks;
