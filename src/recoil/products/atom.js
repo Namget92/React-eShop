@@ -11,5 +11,5 @@ export const count = atom({
 });
 export const count2 = atom({
   key: "count2",
-  default: 0,
+  default: 1,
 });

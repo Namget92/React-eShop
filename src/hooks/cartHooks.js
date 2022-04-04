@@ -26,7 +26,7 @@ function cartHooks() {
       }
     });
     setCCart(newArray);
-    localStorage.setItem("cart", JSON.stringify(newArray));
+    localStorage.setItem("cart", JSON.stringify(newArray || []));
   }
 
   // function updateCart() {

@@ -6,7 +6,7 @@ import userHook from "../hooks/userHook";
 import { useRecoilState } from "recoil";
 import { currentUser } from "../recoil/users/currentUser/atom";
 import { currentCartValue } from "../recoil/cart/atom";
-import { itemsStock } from "../recoil/products/atom";
+import { itemsStock, count, count2 } from "../recoil/products/atom";
 import { nanoid } from "nanoid";
 import cartHooks from "../hooks/cartHooks";
 
@@ -16,6 +16,7 @@ function Cart() {
   const [cCart, setCCart] = useRecoilState(currentCartValue);
   const [items, setItems] = useRecoilState(itemsStock);
   const { removeItem } = cartHooks(useRecoilState);
+  const [counter2, setCounter2] = useRecoilState(count2);
 
   useEffect(() => {
     userStorage();
@@ -31,7 +32,6 @@ function Cart() {
   const totalPrice = cartToShow.forEach((item) => {
     price = price + items[item.iID].price;
   });
-  console.log(cartToShow);
 
   if (items.length === 0) return <h1>Loading...</h1>;
   return (
@@ -68,7 +68,6 @@ function Cart() {
               margin: "1rem",
               padding: "1rem",
               width: "15rem",
-
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",

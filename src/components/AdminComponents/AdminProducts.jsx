@@ -6,16 +6,19 @@ import { useNavigate } from "react-router-dom";
 function AdminUsers() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [counter, setCounter] = useRecoilState(count);
-  const [counter2, setCounter2] = useRecoilState(count);
+  const [counter2, setCounter2] = useRecoilState(count2);
   const navigate = useNavigate();
 
   function handleRemove(itemID) {
     let c = counter2;
     const newArray = items.filter((item) => item.id !== itemID);
-    localStorage.setItem("stock", JSON.stringify(newArray));
+    localStorage.setItem("stock", JSON.stringify(newArray || []));
     setItems(newArray);
     console.log(items);
     c = c + 1;
+    if (c === 0) {
+      c = 1;
+    }
     setCounter2(c);
   }
   function handleImageClick(id) {

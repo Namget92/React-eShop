@@ -6,7 +6,7 @@ import userHook from "../hooks/userHook";
 import { useRecoilState } from "recoil";
 import { currentUser } from "../recoil/users/currentUser/atom";
 import { currentCartValue } from "../recoil/cart/atom";
-import { itemsStock } from "../recoil/products/atom";
+import { itemsStock, count, count2 } from "../recoil/products/atom";
 import { nanoid } from "nanoid";
 import cartHooks from "../hooks/cartHooks";
 import { useNavigate } from "react-router-dom";
@@ -14,9 +14,11 @@ import { useNavigate } from "react-router-dom";
 function UserCart() {
   const { userStorage } = userHook(useRecoilState);
   const [cUser, setCUser] = useRecoilState(currentUser);
+  const [counter, setCounter] = useRecoilState(count);
   const [cCart, setCCart] = useRecoilState(currentCartValue);
   const [items, setItems] = useRecoilState(itemsStock);
   const { removeItem } = cartHooks(useRecoilState);
+  const [counter2, setCounter2] = useRecoilState(count2);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -83,13 +85,13 @@ function UserCart() {
               Belongs to:{" "}
               {product.uID === undefined ? "undefined" : product.uID}
             </h2>
-            <h2>{items[product.iID].title}</h2>
+            <h2>{items[product.iID - 1].title}</h2>
             <img
-              src={items[product.iID].image}
-              alt={`picture of ${items[product.iID].title}`}
+              src={items[product.iID - 1].image}
+              alt={`picture of ${items[product.iID - 1].title}`}
               style={{ width: "10rem" }}
             />
-            <h3>Price: {items[product.iID].price} €</h3>
+            <h3>Price: {items[product.iID - 1].price} €</h3>
             <button
               onClick={() => {
                 removeItem(product.pID);
