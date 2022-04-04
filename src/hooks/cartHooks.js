@@ -29,6 +29,7 @@ function cartHooks() {
 
   function updateCart() {
     setCCart(JSON.parse(localStorage.getItem("cart" || [])));
+    console.log("tets");
   }
 
   return { addItem, removeItem, updateCart };
