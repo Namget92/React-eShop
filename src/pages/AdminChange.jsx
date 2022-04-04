@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useRecoilState } from "recoil";
-import { itemsStock } from "../recoil/products/atom";
+import { itemsStock, count } from "../recoil/products/atom";
 import { useNavigate } from "react-router-dom";
 import userHook from "../hooks/userHook";
 import { currentUser } from "../recoil/users/currentUser/atom";
@@ -13,7 +13,8 @@ function AdminChange() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [cUser, setCUser] = useRecoilState(currentUser);
   const params = useParams();
-  const item = items[params.id - 1];
+  const [counter, setCounter] = useRecoilState(count);
+  const item = items[params.id - counter];
   const { userStorage } = userHook(useRecoilState);
   const [titel, setTitel] = useState("");
   const [price, setPrice] = useState(0);
@@ -39,7 +40,6 @@ function AdminChange() {
         body: JSON.stringify({
           category: category,
           description: description,
-          //   id: items[params.id - 1].id,
           image: image,
           price: price,
           rating: {
@@ -52,7 +52,7 @@ function AdminChange() {
         .then((res) => res.json())
         .then((res) => {
           const newArray = items.filter(
-            (item) => item.id !== items[params.id - 1].id
+            (item) => item.id !== items[params.id - counter].id
           );
           console.log(newArray);
 
