@@ -13,7 +13,7 @@ function AdminChange() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [cUser, setCUser] = useRecoilState(currentUser);
   const params = useParams();
-  const item = items[params.id - 1];
+  const item = items.find((item) => item.id === counter);
   const { userStorage } = userHook(useRecoilState);
   const [titel, setTitel] = useState("");
   const [price, setPrice] = useState(0);
@@ -23,6 +23,7 @@ function AdminChange() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
+  const [counter, setCounter] = useRecoilState(count);
 
   useEffect(() => {
     userStorage();
