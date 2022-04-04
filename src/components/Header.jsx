@@ -21,12 +21,14 @@ export default function Header() {
     } else if (gate === 6) {
       localStorage.removeItem("currentUsers");
       setCUser([]);
+    } else if (gate === 7) {
+      navigate("/AdminPage");
     } else {
       navigate("/NotFound");
     }
   }
   return (
-    <span
+    <div
       style={{
         display: "flex",
         justifyContent: "center",
@@ -70,10 +72,10 @@ export default function Header() {
         <>
           <button
             onClick={() => {
-              handleClickMenu(5);
+              cUser.role === "user" ? handleClickMenu(5) : handleClickMenu(7);
             }}
           >
-            {cUser.name.firstname}´s Page
+            {cUser.role === "admin" ? "Admin Page" : "User Page"}
           </button>
           <button
             onClick={() => {
@@ -84,6 +86,6 @@ export default function Header() {
           </button>
         </>
       )}
-    </span>
+    </div>
   );
 }

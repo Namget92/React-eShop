@@ -43,14 +43,19 @@ function Product() {
         <title>{item.title}</title>
       </Helmet>
       <Header />
-      <main style={{ display: "grid", justifyContent: "center" }}>
+      <main
+        style={{
+          display: "grid",
+          justifyContent: "center",
+          minHeight: "87vh",
+        }}
+      >
         <div
           style={{
             border: "black solid 2px",
             margin: "0 1rem 0 1rem",
             padding: "0 1rem 0 1rem",
             width: "90vw",
-            height: "80vh",
             display: "grid",
             justifyItems: "center",
             padding: "1rem",
@@ -65,9 +70,7 @@ function Product() {
           />
           <ul style={{ padding: "0", marginTop: "1rem" }}>
             <li style={{ listStyleType: "none" }}>Price: {item.price} €</li>
-            <li style={{ listStyleType: "none" }}>
-              Rating: {item.rating.rate} ⭐
-            </li>
+
             <li style={{ listStyleType: "none", visibility: "revert" }}>
               {item.description}
             </li>
@@ -82,6 +85,7 @@ function Product() {
           </button>
         </div>
       </main>
+
       <Footer />
     </div>
   );

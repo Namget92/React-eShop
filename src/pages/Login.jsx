@@ -33,6 +33,16 @@ function Login() {
     });
   }
 
+  function adminLogin() {
+    user.forEach((person) => {
+      if (person.id === 1216874387060039) {
+        setCUser(person);
+        localStorage.setItem("currentUsers", JSON.stringify(person));
+        navigate("/AdminPage");
+      }
+    });
+  }
+
   return (
     <div>
       <Helmet>
@@ -40,37 +50,72 @@ function Login() {
       </Helmet>
       <Header />
       <main
-        style={{ display: "grid", justifyItems: "center", marginTop: "15rem" }}
+        style={{ display: "grid", justifyItems: "center", marginTop: "12rem" }}
       >
-        <form action="submit" onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        <form
+          style={{ display: "grid", justifyItems: "center" }}
+          action="submit"
+          onSubmit={handleSubmit}
+        >
           <input
+            style={{ margin: "0.25rem", height: "2rem", textAlign: "center" }}
             type="text"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
+            style={{ margin: "0.25rem", height: "2rem", textAlign: "center" }}
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Login</button>
+          <button
+            style={{
+              margin: "0.25rem",
+              height: "2rem",
+              textAlign: "center",
+              width: "50%",
+            }}
+            type="submit"
+          >
+            Login
+          </button>
         </form>
         <div
           style={{
             display: "grid",
             justifyItems: "center",
-            marginTop: "7.5rem",
+            marginTop: "2rem",
           }}
         >
-          <p>Want to create an accont?</p>
+          <h4>Want to create an accont?</h4>
           <button
+            style={{
+              margin: "0.25rem",
+              height: "rem",
+              textAlign: "center",
+              width: "50%",
+            }}
             onClick={() => {
               navigate("/CreateAccount");
             }}
           >
             Create Account
+          </button>
+
+          <button
+            style={{
+              margin: "0.25rem",
+              height: "rem",
+              textAlign: "center",
+              width: "50%",
+            }}
+            onClick={adminLogin}
+          >
+            Admin Login
           </button>
         </div>
       </main>

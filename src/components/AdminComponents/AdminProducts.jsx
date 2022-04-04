@@ -1,9 +1,19 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { itemsStock } from "../../recoil/products/atom";
+import { useNavigate } from "react-router-dom";
 
 function AdminUsers() {
   const [items, setItems] = useRecoilState(itemsStock);
+  const navigate = useNavigate();
+  function handleRemove(itemID) {
+    const newArray = items.filter((item) => item.id !== itemID);
+    localStorage.setItem("stock", JSON.stringify(newArray));
+    setItems(newArray);
+  }
+  function handleImageClick(id) {
+    navigate(`/AdminChange/${id}`);
+  }
 
   return (
     <div>
@@ -22,8 +32,8 @@ function AdminUsers() {
               border: "black solid 2px",
               margin: "1rem",
               padding: "0.1rem",
-              width: "15rem",
-              height: "30rem",
+              width: "16rem",
+              height: "31rem",
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
@@ -35,7 +45,38 @@ function AdminUsers() {
               alt={`picture of ${item.title}`}
               style={{ width: "10rem" }}
             />
-            <h3>Price: {item.price} €</h3>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <h3>Price: {item.price} €</h3>{" "}
+              <button
+                style={{
+                  marginLeft: "0.5rem",
+                  height: "1.5rem",
+                  width: "1.5rem",
+                }}
+                onClick={() => {
+                  handleRemove(item.id);
+                }}
+              >
+                x
+              </button>
+              <button
+                style={{
+                  marginLeft: "0.5rem",
+                  height: "1.5rem",
+                  width: "5rem",
+                }}
+                onClick={() => {
+                  handleImageClick(item.id);
+                }}
+              >
+                Change
+              </button>
+            </div>
           </div>
         ))}
       </main>

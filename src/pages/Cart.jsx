@@ -47,10 +47,19 @@ function Cart() {
       </Helmet>
       <Header />
       <h1 style={{ textAlign: "center" }}>
-        Total cost: {Math.round(price * 100) / 100}
+        Total cost: {Math.round(price * 100) / 100} €
       </h1>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {" "}
+        <button>Go to checkout</button>
+      </div>
       <main
-        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          minHeight: "77.5vh",
+        }}
       >
         {cCart.map((product) => (
           <div
@@ -60,7 +69,7 @@ function Cart() {
               margin: "1rem",
               padding: "1rem",
               width: "15rem",
-              height: "30rem",
+
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
@@ -86,6 +95,7 @@ function Cart() {
           </div>
         ))}
       </main>
+
       <Footer />
     </div>
   );

@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import MyPage from "./pages/MyPage";
 import AdminPage from "./pages/AdminPage";
 import CreateAccount from "./pages/CreateAccount";
+import AdminChange from "./pages/AdminChange";
 
 function App() {
   const [items, setItems] = useRecoilState(itemsStock);
@@ -47,6 +48,7 @@ function App() {
       <Route path="/Login" element={<Login />} />
       <Route path="/MyPage" element={<MyPage />} />
       <Route path="/AdminPage" element={<AdminPage />} />
+      <Route path="/AdminChange/:id" element={<AdminChange />} />
       <Route path="/CreateAccount" element={<CreateAccount />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

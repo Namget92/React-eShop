@@ -34,7 +34,7 @@ function CreateAccount() {
           email: email,
           username: username,
           password: password,
-          role: "user",
+          role: role,
           name: {
             firstname: firstname,
             lastname: lasttname,
@@ -131,6 +131,7 @@ function CreateAccount() {
             value={zip}
             onChange={(e) => setZip(e.target.value)}
           />
+
           <button type="submit">CreateAccount</button>
         </form>
       </main>

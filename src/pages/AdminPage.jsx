@@ -23,8 +23,6 @@ function AdminPage() {
     userStorage();
   }, [cUser]);
 
-  console.log(aUser);
-
   if (Object.keys(cUser).length === 0 || cUser.role !== "admin")
     return (
       <div>
@@ -45,7 +43,6 @@ function AdminPage() {
     } else {
       setBoo(true);
     }
-    console.log(boo);
   }
 
   return (
@@ -59,10 +56,14 @@ function AdminPage() {
         <title>Admins Page</title>
       </Helmet>
       <Header />
-
-      <button onClick={handleClick}>
-        {boo ? "Show Users" : "Show Products"}
-      </button>
+      <div
+        style={{ display: "flex", justifyContent: "center", margin: "1rem" }}
+      >
+        {" "}
+        <button onClick={handleClick}>
+          {boo ? "Show Users" : "Show Products"}
+        </button>
+      </div>
 
       <div>{boo ? <AdminProducts /> : <AdminUsers />}</div>
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Header from "../components/Header";
 import { useParams } from "react-router-dom";
@@ -11,6 +11,8 @@ import userHook from "../hooks/userHook";
 
 function Products() {
   const [items, setItems] = useRecoilState(itemsStock);
+  const [category, setCategory] = useState("all");
+  const [arrProd, setArrProd] = useState(items);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -25,6 +27,15 @@ function Products() {
     userStorage();
   }, [cUser]);
 
+  useEffect(() => {
+    if (category === "all") {
+      setArrProd(items);
+    } else {
+      const result = items.filter((item) => item.category === category);
+      setArrProd(result);
+    }
+  }, [category]);
+
   return (
     <div
       style={{
@@ -36,10 +47,42 @@ function Products() {
         <title>Products</title>
       </Helmet>
       <Header />
-      <main
-        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          margin: "1rem",
+          alignItems: "center",
+          textAlign: "center",
+        }}
       >
-        {items.map((item) => (
+        <h2>Category</h2>
+        <select
+          style={{
+            width: "15rem",
+          }}
+          type="text"
+          placeholder="Category"
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value={"all"}>All</option>
+          <option value={"men's clothing"}>Men's clothing</option>
+          <option value={"jewelery"}>Jewelery</option>
+          <option value={"electronics"}>Electronics</option>
+          <option value={"women's clothing"}>Women's clothing</option>
+        </select>
+      </div>
+      <main
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          minHeight: "74.5vh",
+        }}
+      >
+        {arrProd.map((item) => (
           <div
             key={item.id}
             style={{
@@ -47,7 +90,7 @@ function Products() {
               margin: "1rem",
               padding: "1rem",
               width: "15rem",
-              height: "30rem",
+              maxHeight: "30rem",
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
