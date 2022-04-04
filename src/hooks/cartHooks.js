@@ -27,10 +27,10 @@ function cartHooks() {
     localStorage.setItem("cart", JSON.stringify(newArray));
   }
 
-  function updateCart() {
-    setCCart(JSON.parse(localStorage.getItem("cart" || [])));
-    console.log("tets");
-  }
+  // function updateCart() {
+  //   setCCart(JSON.parse(localStorage.getItem("cart" || [])));
+  //   console.log("tets");
+  // }
 
   return { addItem, removeItem, updateCart };
 }

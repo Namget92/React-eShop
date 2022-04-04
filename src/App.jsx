@@ -42,9 +42,9 @@ function App() {
     return setUser(JSON.parse(localStorage.getItem("users" || [])));
   }, []);
 
-  useEffect(() => {
-    updateCart();
-  }, []);
+  // useEffect(() => {
+  //   updateCart();
+  // }, []);
 
   return (
     <Routes>
