@@ -21,6 +21,7 @@ function Products() {
   }
 
   useEffect(() => {
+    setItems(JSON.parse(localStorage.getItem("stock" || [])));
     userStorage();
   }, [cUser]);
 
