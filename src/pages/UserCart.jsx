@@ -9,6 +9,7 @@ import { currentCartValue } from "../recoil/cart/currentCart/atom";
 import { itemsStock } from "../recoil/products/atom";
 import { nanoid } from "nanoid";
 import cartHooks from "../hooks/cartHooks";
+import { useNavigate } from "react-router-dom";
 
 function UserCart() {
   const { userStorage } = userHook(useRecoilState);
@@ -16,6 +17,7 @@ function UserCart() {
   const [cCart, setCCart] = useRecoilState(currentCartValue);
   const [items, setItems] = useRecoilState(itemsStock);
   const { removeItem } = cartHooks(useRecoilState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     userStorage();
@@ -26,6 +28,19 @@ function UserCart() {
   }, []);
 
   if (items.length === 0) return <h1>Loading...</h1>;
+  if (Object.keys(cUser).length === 0 || cUser.role !== "admin")
+    return (
+      <div>
+        Admin not loged in <br />{" "}
+        <button
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Go to Home
+        </button>{" "}
+      </div>
+    );
 
   return (
     <div
