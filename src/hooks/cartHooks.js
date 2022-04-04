@@ -7,7 +7,9 @@ function cartHooks() {
   const [cCart, setCCart] = useRecoilState(currentCartValue);
 
   function addItem(username, itemID) {
-    const selectedItem = { uID: username, iID: itemID - 1, pID: nanoid() };
+    console.log(username);
+    console.log(itemID);
+    const selectedItem = { uID: username, iID: itemID, pID: nanoid() };
     const amountArray = [];
     amountArray.push(selectedItem);
     console.log(cCart);

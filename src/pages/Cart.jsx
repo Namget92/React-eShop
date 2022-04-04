@@ -25,14 +25,15 @@ function Cart() {
     setCCart(JSON.parse(localStorage.getItem("cart" || [])));
   }, []);
 
-  if (items.length === 0) return <h1>Loading...</h1>;
   const cartToShow = cCart.filter((item) => item.uID === cUser.username);
 
   let price = 0;
   const totalPrice = cartToShow.forEach((item) => {
     price = price + items[item.iID].price;
   });
+  console.log(cartToShow);
 
+  if (items.length === 0) return <h1>Loading...</h1>;
   return (
     <div
       style={{
@@ -75,13 +76,13 @@ function Cart() {
               alignItems: "center",
             }}
           >
-            <h2>{items[product.iID].title}</h2>
+            <h2>{items[product.iID - 1].title}</h2>
             <img
-              src={items[product.iID].image}
-              alt={`picture of ${items[product.iID].title}`}
+              src={items[product.iID - 1].image}
+              alt={`picture of ${items[product.iID - 1].title}`}
               style={{ width: "10rem" }}
             />
-            <h3>Price: {items[product.iID].price} €</h3>
+            <h3>Price: {items[product.iID - 1].price} €</h3>
             <button
               onClick={() => {
                 removeItem(product.pID);

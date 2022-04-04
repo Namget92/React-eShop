@@ -17,6 +17,8 @@ function Product() {
   const { userStorage } = userHook(useRecoilState);
   const item = items.find((item) => item.id === counter);
 
+  console.log(item);
+
   useEffect(() => {
     return setItems(JSON.parse(localStorage.getItem("stock" || [])));
   }, []);
