@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import userHook from "../hooks/userHook";
 import { useRecoilState } from "recoil";
 import { currentUser } from "../recoil/users/currentUser/atom";
-import { currentCartValue } from "../recoil/cart/currentCart/atom";
+import { currentCartValue } from "../recoil/cart/atom";
 import { itemsStock } from "../recoil/products/atom";
 import { nanoid } from "nanoid";
 import cartHooks from "../hooks/cartHooks";
@@ -27,7 +27,6 @@ function Cart() {
 
   if (items.length === 0) return <h1>Loading...</h1>;
   const cartToShow = cCart.filter((item) => item.uID === cUser.username);
-  console.log(cartToShow);
 
   let price = 0;
   const totalPrice = cartToShow.forEach((item) => {

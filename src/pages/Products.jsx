@@ -4,19 +4,23 @@ import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useRecoilState } from "recoil";
-import { itemsStock } from "../recoil/products/atom";
+import { itemsStock, count } from "../recoil/products/atom";
 import { currentUser } from "../recoil/users/currentUser/atom";
 import userHook from "../hooks/userHook";
+import { useParams } from "react-router-dom";
 
 function Products() {
   const [items, setItems] = useRecoilState(itemsStock);
+  const [counter, setCounter] = useRecoilState(count);
   const [category, setCategory] = useState("all");
   const [arrProd, setArrProd] = useState(items);
   const navigate = useNavigate();
   const [cUser, setCUser] = useRecoilState(currentUser);
   const { userStorage } = userHook(useRecoilState);
+  const params = useParams();
 
   function handleImageClick(id) {
+    setCounter(id);
     navigate(`/Products/${id}`);
   }
 

@@ -13,8 +13,7 @@ function AdminChange() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [cUser, setCUser] = useRecoilState(currentUser);
   const params = useParams();
-  const [counter, setCounter] = useRecoilState(count);
-  const item = items[params.id - counter];
+  const item = items[params.id - 1];
   const { userStorage } = userHook(useRecoilState);
   const [titel, setTitel] = useState("");
   const [price, setPrice] = useState(0);
@@ -52,7 +51,7 @@ function AdminChange() {
         .then((res) => res.json())
         .then((res) => {
           const newArray = items.filter(
-            (item) => item.id !== items[params.id - counter].id
+            (item) => item.id !== items[params.id - 1].id
           );
           console.log(newArray);
 

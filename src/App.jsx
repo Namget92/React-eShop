@@ -4,7 +4,6 @@ import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import { itemsStock } from "./recoil/products/atom";
 import { allUsers } from "./recoil/users/allUsers/atom";
-// import cartHooks from "./hooks/cartHooks";
 
 //Pages
 import Home from "./pages/Home";

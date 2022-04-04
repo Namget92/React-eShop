@@ -13,6 +13,7 @@ function AdminUsers() {
     const newArray = items.filter((item) => item.id !== itemID);
     localStorage.setItem("stock", JSON.stringify(newArray));
     setItems(newArray);
+    console.log(items);
     c = c + 1;
     setCounter(c);
   }

@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import userHook from "../hooks/userHook";
 import { useRecoilState } from "recoil";
 import { currentUser } from "../recoil/users/currentUser/atom";
-import { currentCartValue } from "../recoil/cart/currentCart/atom";
+import { currentCartValue } from "../recoil/cart/atom";
 import { itemsStock } from "../recoil/products/atom";
 import { nanoid } from "nanoid";
 import cartHooks from "../hooks/cartHooks";

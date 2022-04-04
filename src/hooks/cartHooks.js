@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { currentCartValue } from "../recoil/cart/currentCart/atom";
+import { currentCartValue } from "../recoil/cart/atom";
 import { nanoid } from "nanoid";
 
 function cartHooks() {

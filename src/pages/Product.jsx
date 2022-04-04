@@ -13,10 +13,9 @@ function Product() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [cUser, setCUser] = useRecoilState(currentUser);
   const [counter, setCounter] = useRecoilState(count);
-  const params = useParams();
-  const item = items[params.id - counter];
   const { addItem } = cartHooks(useRecoilState);
   const { userStorage } = userHook(useRecoilState);
+  const item = items.find((item) => item.id === counter);
 
   useEffect(() => {
     return setItems(JSON.parse(localStorage.getItem("stock" || [])));
