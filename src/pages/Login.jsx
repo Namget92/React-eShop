@@ -31,16 +31,6 @@ function Login() {
     });
   }
 
-  function adminLogin() {
-    user.forEach((person) => {
-      if (person.id === 1216874387060039) {
-        setCUser(person);
-        localStorage.setItem("currentUsers", JSON.stringify(person));
-        navigate("/AdminPage");
-      }
-    });
-  }
-
   return (
     <div>
       <Helmet>
@@ -102,18 +92,6 @@ function Login() {
             }}
           >
             Create Account
-          </button>
-
-          <button
-            style={{
-              margin: "0.25rem",
-              height: "rem",
-              textAlign: "center",
-              width: "50%",
-            }}
-            onClick={adminLogin}
-          >
-            Admin Login
           </button>
         </div>
       </main>
