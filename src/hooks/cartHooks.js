@@ -10,6 +10,7 @@ function cartHooks() {
     const selectedItem = { uID: username, iID: itemID - 1, pID: nanoid() };
     const amountArray = [];
     amountArray.push(selectedItem);
+    console.log(cCart);
     let newCart = cCart.concat(amountArray);
     setCCart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
