@@ -17,11 +17,13 @@ function Cart() {
   const [items, setItems] = useRecoilState(itemsStock);
   const { removeItem } = cartHooks(useRecoilState);
 
-  console.log(cCart);
-
   useEffect(() => {
     userStorage();
   }, [cUser]);
+
+  useEffect(() => {
+    setCCart(JSON.parse(localStorage.getItem("cart" || [])));
+  }, []);
 
   if (items.length === 0) return <h1>Loading...</h1>;
   const cartToShow = cCart.filter((item) => item.uID === cUser.username);

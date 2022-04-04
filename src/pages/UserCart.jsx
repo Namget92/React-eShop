@@ -21,6 +21,10 @@ function UserCart() {
     userStorage();
   }, [cUser]);
 
+  useEffect(() => {
+    setCCart(JSON.parse(localStorage.getItem("cart" || [])));
+  }, []);
+
   if (items.length === 0) return <h1>Loading...</h1>;
 
   return (
