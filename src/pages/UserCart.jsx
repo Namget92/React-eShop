@@ -16,7 +16,7 @@ function UserCart() {
   const [cUser, setCUser] = useRecoilState(currentUser);
   const [counter, setCounter] = useRecoilState(count);
   const [cCart, setCCart] = useRecoilState(currentCartValue);
-  const [items, setItems] = useRecoilState(itemsStock);
+
   const { removeItem } = cartHooks(useRecoilState);
   const [counter2, setCounter2] = useRecoilState(count2);
   const navigate = useNavigate();

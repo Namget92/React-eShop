@@ -15,15 +15,14 @@ function Cart() {
   const [cUser, setCUser] = useRecoilState(currentUser);
   const [cCart, setCCart] = useRecoilState(currentCartValue);
   const [items, setItems] = useRecoilState(itemsStock);
-  const { removeItem } = cartHooks(useRecoilState);
+  const { removeItem, priceIsRice } = cartHooks(useRecoilState);
   const [counter2, setCounter2] = useRecoilState(count2);
 
   useEffect(() => {
     userStorage();
   }, [cUser]);
-  console.log(cCart);
 
-  if (cCart === null || [])
+  if (cCart === null)
     return (
       <div
         style={{
@@ -48,16 +47,9 @@ function Cart() {
         <Footer />
       </div>
     );
+  const price = priceIsRice();
 
   const cartToShow = cCart.filter((item) => item.uID === cUser.username);
-
-  let price = 0;
-  console.log(price);
-  const totalPrice = cartToShow.forEach((item) => {
-    price = price + items[item.iID - 1].price;
-  });
-  console.log(price);
-
   if (items.length === 0) return <h1>Loading...</h1>;
 
   return (

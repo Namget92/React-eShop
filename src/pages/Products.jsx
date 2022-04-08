@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useRecoilState } from "recoil";
-import { itemsStock, count, stockC } from "../recoil/products/atom";
+import { itemsStock, count, stockC, arrY } from "../recoil/products/atom";
 import { currentUser } from "../recoil/users/currentUser/atom";
 import userHook from "../hooks/userHook";
 import { useParams } from "react-router-dom";
@@ -14,7 +14,7 @@ function Products() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [counter, setCounter] = useRecoilState(count);
   const [category, setCategory] = useRecoilState(stockC);
-  const [arrProd, setArrProd] = useState(items);
+  const [arrProd, setArrProd] = useRecoilState(arrY);
   const navigate = useNavigate();
   const [cUser, setCUser] = useRecoilState(currentUser);
   const { userStorage } = userHook(useRecoilState);
@@ -24,15 +24,6 @@ function Products() {
     setCounter(id);
     navigate(`/Products/${id}`);
   }
-
-  useEffect(() => {
-    axios
-      .get("https://k4backend.osuka.dev/products")
-      .then((response) =>
-        localStorage.setItem("stock", JSON.stringify(response.data))
-      );
-    return setItems(JSON.parse(localStorage.getItem("stock" || [])));
-  }, []);
 
   useEffect(() => {
     if (category === "all") {
@@ -50,8 +41,6 @@ function Products() {
         localStorage.setItem("stock", JSON.stringify(response.data))
       );
     setItems(JSON.parse(localStorage.getItem("stock" || [])));
-
-    // return <h1>Reload page please</h1>;
   }
   return (
     <div

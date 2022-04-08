@@ -10,6 +10,11 @@ export const stockC = atom({
   default: "all",
 });
 
+export const arrY = atom({
+  key: "arrY",
+  default: "all",
+});
+
 export const count = atom({
   key: "count",
   default: 0,

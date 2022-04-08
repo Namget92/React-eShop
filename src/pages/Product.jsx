@@ -8,6 +8,7 @@ import { itemsStock, count } from "../recoil/products/atom";
 import userHook from "../hooks/userHook";
 import cartHooks from "../hooks/cartHooks";
 import { currentUser } from "../recoil/users/currentUser/atom";
+import axios from "axios";
 
 function Product() {
   const [items, setItems] = useRecoilState(itemsStock);
@@ -15,6 +16,16 @@ function Product() {
   const [counter, setCounter] = useRecoilState(count);
   const { addItem } = cartHooks(useRecoilState);
   const { userStorage } = userHook(useRecoilState);
+
+  if (items === null) {
+    axios
+      .get("https://k4backend.osuka.dev/products")
+      .then((response) =>
+        localStorage.setItem("stock", JSON.stringify(response.data))
+      );
+    setItems(JSON.parse(localStorage.getItem("stock" || [])));
+  }
+
   const item = items.find((item) => item.id === counter);
 
   console.log(item);

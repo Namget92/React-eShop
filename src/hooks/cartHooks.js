@@ -2,9 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { currentCartValue } from "../recoil/cart/atom";
 import { nanoid } from "nanoid";
+import { itemsStock } from "../recoil/products/atom";
+import { currentUser } from "../recoil/users/currentUser/atom";
 
 function cartHooks() {
   const [cCart, setCCart] = useRecoilState(currentCartValue);
+  const [items, setItems] = useRecoilState(itemsStock);
+  const [cUser, setCUser] = useRecoilState(currentUser);
 
   function addItem(username, itemID) {
     console.log(username);
@@ -34,7 +38,15 @@ function cartHooks() {
     localStorage.setItem("cart", JSON.stringify(newArray || []));
   }
 
-  return { addItem, removeItem };
+  function priceIsRice() {
+    const cartToShow = cCart.filter((item) => item.uID === cUser.username);
+    let price = 0;
+    const totalPrice = cartToShow.forEach((item) => {
+      price = price + items[item.iID - 1].price;
+    });
+    return price;
+  }
+  return { addItem, removeItem, priceIsRice };
 }
 
 export default cartHooks;

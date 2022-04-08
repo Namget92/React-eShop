@@ -25,12 +25,21 @@ function App() {
   const [cCart, setCCart] = useRecoilState(currentCartValue);
 
   useEffect(() => {
-    axios
-      .get("https://k4backend.osuka.dev/users")
-      .then((response) =>
-        localStorage.setItem("users", JSON.stringify(response.data))
-      );
-    return setUser(JSON.parse(localStorage.getItem("users" || [])));
+    async function getPeople() {
+      try {
+        await fetch("https://k4backend.osuka.dev/users", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => setUser(res));
+      } catch (error) {
+        alert(error);
+      }
+    }
+    getPeople();
   }, []);
 
   useEffect(() => {
