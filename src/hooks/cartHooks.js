@@ -13,9 +13,14 @@ function cartHooks() {
     const amountArray = [];
     amountArray.push(selectedItem);
     console.log(cCart);
-    let newCart = cCart.concat(amountArray);
-    setCCart(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart));
+    if (cCart !== null) {
+      let newCart = cCart.concat(amountArray);
+      setCCart(newCart);
+      localStorage.setItem("cart", JSON.stringify(newCart));
+    } else {
+      setCCart(amountArray);
+      localStorage.setItem("cart", JSON.stringify(amountArray));
+    }
   }
 
   function removeItem(id) {
@@ -28,11 +33,6 @@ function cartHooks() {
     setCCart(newArray);
     localStorage.setItem("cart", JSON.stringify(newArray || []));
   }
-
-  // function updateCart() {
-  //   setCCart(JSON.parse(localStorage.getItem("cart" || [])));
-  //   console.log("tets");
-  // }
 
   return { addItem, removeItem };
 }

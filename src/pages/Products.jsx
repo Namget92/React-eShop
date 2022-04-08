@@ -4,15 +4,16 @@ import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useRecoilState } from "recoil";
-import { itemsStock, count } from "../recoil/products/atom";
+import { itemsStock, count, stockC } from "../recoil/products/atom";
 import { currentUser } from "../recoil/users/currentUser/atom";
 import userHook from "../hooks/userHook";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function Products() {
   const [items, setItems] = useRecoilState(itemsStock);
   const [counter, setCounter] = useRecoilState(count);
-  const [category, setCategory] = useState("all");
+  const [category, setCategory] = useRecoilState(stockC);
   const [arrProd, setArrProd] = useState(items);
   const navigate = useNavigate();
   const [cUser, setCUser] = useRecoilState(currentUser);
@@ -25,8 +26,12 @@ function Products() {
   }
 
   useEffect(() => {
-    setItems(JSON.parse(localStorage.getItem("stock" || [])));
-    userStorage();
+    axios
+      .get("https://k4backend.osuka.dev/products")
+      .then((response) =>
+        localStorage.setItem("stock", JSON.stringify(response.data))
+      );
+    return setItems(JSON.parse(localStorage.getItem("stock" || [])));
   }, []);
 
   useEffect(() => {
@@ -38,6 +43,16 @@ function Products() {
     }
   }, [category]);
 
+  if (arrProd === null || items === null) {
+    axios
+      .get("https://k4backend.osuka.dev/products")
+      .then((response) =>
+        localStorage.setItem("stock", JSON.stringify(response.data))
+      );
+    setItems(JSON.parse(localStorage.getItem("stock" || [])));
+
+    // return <h1>Reload page please</h1>;
+  }
   return (
     <div
       style={{
@@ -76,6 +91,7 @@ function Products() {
           <option value={"women's clothing"}>Women's clothing</option>
         </select>
       </div>
+
       <main
         style={{
           display: "flex",
@@ -84,7 +100,7 @@ function Products() {
           minHeight: "74.5vh",
         }}
       >
-        {arrProd.map((item) => (
+        {items.map((item) => (
           <div
             key={item.id}
             style={{
@@ -109,6 +125,7 @@ function Products() {
           </div>
         ))}
       </main>
+
       <Footer />
     </div>
   );

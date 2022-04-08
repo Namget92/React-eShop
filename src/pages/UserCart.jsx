@@ -25,9 +25,31 @@ function UserCart() {
     userStorage();
   }, [cUser]);
 
-  useEffect(() => {
-    setCCart(JSON.parse(localStorage.getItem("cart" || [])));
-  }, []);
+  if (cCart === null)
+    return (
+      <div
+        style={{
+          position: "relative",
+          paddingBottom: "8rem",
+        }}
+      >
+        <Helmet>
+          <title>Users Carts</title>
+        </Helmet>
+        <Header />
+        <main
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            minHeight: "77.5vh",
+          }}
+        >
+          <h1 style={{ textAlign: "center" }}>Carts is empty</h1>
+        </main>
+        <Footer />
+      </div>
+    );
 
   if (items.length === 0) return <h1>Loading...</h1>;
   if (Object.keys(cUser).length === 0 || cUser.role !== "admin")

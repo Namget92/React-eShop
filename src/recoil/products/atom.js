@@ -5,6 +5,11 @@ export const itemsStock = atom({
   default: [],
 });
 
+export const stockC = atom({
+  key: "stockC",
+  default: "all",
+});
+
 export const count = atom({
   key: "count",
   default: 0,
