@@ -18,21 +18,25 @@ function Product() {
   const { userStorage } = userHook(useRecoilState);
 
   if (items === null) {
-    axios
-      .get("https://k4backend.osuka.dev/products")
-      .then((response) =>
-        localStorage.setItem("stock", JSON.stringify(response.data))
-      );
-    setItems(JSON.parse(localStorage.getItem("stock" || [])));
+    async function getStock() {
+      try {
+        await fetch("https://k4backend.osuka.dev/products", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => setItems(res));
+      } catch (error) {
+        alert(error);
+      }
+    }
+    getStock();
   }
 
   const item = items.find((item) => item.id === counter);
-
   console.log(item);
-
-  useEffect(() => {
-    return setItems(JSON.parse(localStorage.getItem("stock" || [])));
-  }, []);
 
   useEffect(() => {
     userStorage();

@@ -10,13 +10,14 @@ import { itemsStock, count, count2 } from "../recoil/products/atom";
 import { nanoid } from "nanoid";
 import cartHooks from "../hooks/cartHooks";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function UserCart() {
   const { userStorage } = userHook(useRecoilState);
   const [cUser, setCUser] = useRecoilState(currentUser);
   const [counter, setCounter] = useRecoilState(count);
   const [cCart, setCCart] = useRecoilState(currentCartValue);
-
+  const [items, setItems] = useRecoilState(itemsStock);
   const { removeItem } = cartHooks(useRecoilState);
   const [counter2, setCounter2] = useRecoilState(count2);
   const navigate = useNavigate();
@@ -51,7 +52,15 @@ function UserCart() {
       </div>
     );
 
-  if (items.length === 0) return <h1>Loading...</h1>;
+  if (items === null) {
+    axios
+      .get("https://k4backend.osuka.dev/products")
+      .then((response) =>
+        localStorage.setItem("stock", JSON.stringify(response.data))
+      );
+    setItems(JSON.parse(localStorage.getItem("stock" || [])));
+  }
+
   if (Object.keys(cUser).length === 0 || cUser.role !== "admin")
     return (
       <div>
