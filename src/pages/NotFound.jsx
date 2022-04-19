@@ -22,6 +22,7 @@ function NotFound() {
       navigate("/NotFound");
     }
     console.log("Yo Mamma");
+    console.log("Yo Mamma");
   }
   return (
     <div>
