@@ -24,6 +24,8 @@ function App() {
   const [user, setUser] = useRecoilState(allUsers);
   const [cCart, setCCart] = useRecoilState(currentCartValue);
 
+  console.log("New branch");
+
   useEffect(() => {
     async function getPeople() {
       try {
