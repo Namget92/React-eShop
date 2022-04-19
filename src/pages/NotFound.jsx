@@ -22,8 +22,10 @@ function NotFound() {
       navigate("/NotFound");
     }
   }
+
   return (
     <div>
+      <br />
       <Helmet>
         <title>Home</title>
       </Helmet>
