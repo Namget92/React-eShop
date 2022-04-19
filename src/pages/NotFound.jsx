@@ -48,6 +48,7 @@ function NotFound() {
             Check out our products!
           </button>
         </h2>
+        <br />
       </div>
 
       <Footer />
