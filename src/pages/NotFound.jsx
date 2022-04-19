@@ -21,6 +21,7 @@ function NotFound() {
     } else {
       navigate("/NotFound");
     }
+    console.log("Yo Mamma");
   }
   return (
     <div>
