@@ -32,6 +32,7 @@ function NotFound() {
       <Header />
       <div style={{ textAlign: "center", marginTop: "15rem" }}>
         <h1>Opps there is nothing here!</h1>
+        <br />
         <h2>
           <button
             style={{
