@@ -21,6 +21,7 @@ function Home() {
       navigate("/NotFound");
     }
   }
+  console.log("VersionsHanterings kurs 19 april");
 
   useEffect(() => {
     userStorage();

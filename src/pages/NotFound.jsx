@@ -24,8 +24,10 @@ function NotFound() {
     console.log("Yo Mamma");
     console.log("Yo Mamma");
   }
+
   return (
     <div>
+      <br />
       <Helmet>
         <title>Home</title>
       </Helmet>
