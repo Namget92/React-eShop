@@ -21,6 +21,8 @@ function NotFound() {
     } else {
       navigate("/NotFound");
     }
+    console.log("Yo Mamma");
+    console.log("Yo Mamma");
   }
 
   return (
@@ -47,6 +49,7 @@ function NotFound() {
             Check out our products!
           </button>
         </h2>
+        <br />
       </div>
 
       <Footer />
